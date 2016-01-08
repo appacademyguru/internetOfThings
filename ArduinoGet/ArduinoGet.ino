@@ -34,8 +34,9 @@ Tinysine_CC3000 cc3000 = Tinysine_CC3000(Tinysine_CC3000_CS, Tinysine_CC3000_IRQ
                                          SPI_CLOCK_DIV2); // you can change this clock speed
 
 //Wifi Network credentials
-#define WLAN_SSID       "H4HQP"           // Network name, cannot be longer than 32 characters!
-#define WLAN_PASS       "54C8E356"        // Network password
+#define WLAN_SSID       "PUSD_Guest"           // Network name, cannot be longer than 32 characters!
+#define WLAN_PASS       "A+Student"        // Network password
+
 // Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 #define WLAN_SECURITY   WLAN_SEC_WPA2
 
@@ -99,6 +100,7 @@ void loop(void)
 
 /* connectToSite() is the function that initializes and connects the Wifi module to the wifi network and the Internet.  
 * DO NOT MODIFY THIS FUNCTION
+* You do not need to understand this function to understand the rest of the sketch
 */
 void connectToSite()
 {
@@ -191,19 +193,25 @@ void valueSet()
         
           Serial.println(F("-------------------------------------\n"));
         
+ //As long as there is output available, the Arduino will read output from the API
+
+ 
+
+
+
           while (www.connected()) {
             while (www.available()) {
-              char c = www.read();
-              currentLine += c;
+              char c = www.read();  //Every line of data is downloaded one character at a time, into c
+              currentLine += c; // Each character is added to the end of the currentLine variable
               Serial.print(c);
-              if(c == '\n'){
-                currentLine = "";
+              if(c == '\n'){  
+                currentLine = "";  //After each line, we want to clear the currentLine variable
               }
             }
           }
         
          } else {
-            Serial.println(F("Connection failed"));    
+           // Serial.println(F("Connection failed"));    
             return;
           }
           Serial.println(F("\n----------------------+---------------"));
@@ -214,9 +222,9 @@ void valueSet()
          
           Serial.println("Final Reading:");
           Serial.println(currentLine);
-          getVar = currentLine.toInt();
+          getVar = currentLine.toInt(); // The last line of output will be the data we want to download.
 
-          Serial.print(cycles);
+          Serial.print(cycles); //Number of times the loop has run
           Serial.println(" Cycles");
           
           delay(100);

@@ -1,5 +1,5 @@
 /*************************************************** 
-  This sketch has the Arduino send a basic Get request to a web page
+  This sketch has the Arduino send a basic Post request to a web page
   
  ****************************************************/
  
@@ -56,12 +56,6 @@ String postStr = "";
 
 Tinysine_CC3000_Client www;
 
-/**************************************************************************/
-/*!
-    @brief  Sets up the HW and the CC3000 module (called automatically
-            on startup)
-*/
-/**************************************************************************/
 
 uint32_t ip;
 
@@ -210,7 +204,7 @@ void valueSet()
           }
         
          } else {
-            Serial.println(F("Connection failed"));    
+           // Serial.println(F("Connection failed"));    
             return;
           }
           Serial.println(F("\n----------------------+---------------"));
