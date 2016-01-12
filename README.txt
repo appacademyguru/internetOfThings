@@ -25,4 +25,5 @@ The CC3000 wifi module uses several digital pins to communicate with the Arduino
 
 http://pefarduino2.meteor.com is the unmodified version of the Meteor project. You can use it to test your code.  The buttons change the data value to 5 and 10, and you can input your own data value in the form. You can read the latest data value with http://pefarduino2.meteor.com/data
 
+The wifi password will change on a daily basis. Don't expect to use the same password twice.
 
