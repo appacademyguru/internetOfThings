@@ -11,7 +11,7 @@ Post: You will program the Arduino to connect to a web page you create, send dat
 
 There are 4 folders in this repository:
 
-arduread is the Meteor project that you will use to create your webste.  It contains the fundamental code necessary to interpret both Get and Post commands from the Arduino.
+arduread is the Meteor project that you will use to create your website.  It contains the fundamental code necessary to interpret both Get and Post commands from the Arduino.
 
 ArduinoGet contains the Arduino sketch used to perform a Get request.
 
