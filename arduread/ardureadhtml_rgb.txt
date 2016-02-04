@@ -1,0 +1,36 @@
+
+<body>
+
+
+</body>
+
+<template name= "inputData" >
+   <form>
+		<input type="text" name="inputRedVal">
+       <input type="text" name="inputBlueVal">
+       <input type="text" name="inputGreenVal">
+		<input type="submit" value="Input Data">
+</form>
+<p></p>
+<p></P>
+<!--
+    <li>
+        <input type="button" class="valueRed" value="Red">
+        <input type="button" class="valueBlue" value="Blue">
+        <input type="button" class="valueGreen" value="Green">
+-->
+<!--</li>-->
+</template>
+
+
+
+
+
+<template name="dataTemp">
+
+  <p>
+   {{lastVal}}
+  </p>
+
+
+</template>

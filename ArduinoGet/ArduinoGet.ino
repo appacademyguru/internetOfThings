@@ -10,6 +10,7 @@
 #include <string.h>
 #include "utility/debug.h"
 
+
 /******************************************************************************
 
 The following Digital Pins are used by the Wifi shield and should be considered unavailable for *any* other purpose:
@@ -35,7 +36,7 @@ Tinysine_CC3000 cc3000 = Tinysine_CC3000(Tinysine_CC3000_CS, Tinysine_CC3000_IRQ
 
 //Wifi Network credentials
 #define WLAN_SSID       "Arduino24"           // Network name, cannot be longer than 32 characters!
-#define WLAN_PASS       "arduino4me"        // Network password
+#define WLAN_PASS       "IDontKnow"        // Network password
 
 // Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 #define WLAN_SECURITY   WLAN_SEC_WPA2
@@ -71,9 +72,9 @@ void setup(void)
   Serial.println(getFreeRam(), DEC);
   
   //Setting output pins, to be controlled via Wifi
-  pinMode(7, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(8, OUTPUT);
+//  pinMode(9, OUTPUT);//red
+//  pinMode(8, OUTPUT);//green
+    pinMode(1, INPUT);//blue
   
   
   
@@ -235,27 +236,7 @@ void valueSet()
 
           lastTime = millis();
 
-
-
-          //Now we decide what to do with our data
-           if(getVar>500 && getVar<700)
-                   { 
-                     digitalWrite(7,HIGH);
-                     digitalWrite(6,LOW);
-                     digitalWrite(8, LOW);
-                   }
-                   else if(getVar>700 && getVar<900)
-                   {
-                     digitalWrite(7,LOW);
-                     digitalWrite(6,HIGH);
-                     digitalWrite(8, LOW);
-                   }
-                   else if(getVar>900)
-                   {
-                    digitalWrite(6,LOW);
-                    digitalWrite(7, LOW);
-                    digitalWrite(8, HIGH);               
-                   }
+          
                    
                    
      /* The arduReset function is a last resort.

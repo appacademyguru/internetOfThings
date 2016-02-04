@@ -1,5 +1,3 @@
-
-
 //packages:
 // Iron Router
 // accounts-password
@@ -145,7 +143,7 @@ if (Meteor.isServer) {
                 return;
             }
         }
-    })
+    });
 
 
   
@@ -155,4 +153,3 @@ if (Meteor.isServer) {
   
   
 }
-	
