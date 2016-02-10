@@ -10,6 +10,14 @@
 #include <string.h>
 #include "utility/debug.h"
 
+//code required for LCD display 
+#include <LiquidCrystal.h> 
+LiquidCrystal lcd(2,4,6,7,8,9);
+
+const int sensorPin = A0; 
+const float baselineTemp = 0.0;
+float temperature = 0;
+
 /******************************************************************************
 The following Digital Pins are used by the Wifi shield and should be considered unavailable for *any* other purpose:
 3
@@ -32,7 +40,7 @@ Tinysine_CC3000 cc3000 = Tinysine_CC3000(Tinysine_CC3000_CS, Tinysine_CC3000_IRQ
 
 //Wifi Network credentials
 #define WLAN_SSID       "Arduino24"           // Network name, cannot be longer than 32 characters!
-#define WLAN_PASS       "NoStringsOnMe"        // Network password
+#define WLAN_PASS       "KlaatuBaradaNikto"        // Network password
 // Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 #define WLAN_SECURITY   WLAN_SEC_WPA2
 
@@ -48,7 +56,7 @@ long checkupTime = 10000;
 long lastTime = 0;
 long pulseStart=0;
 long cycles = 1;
-int postData=0;
+float postData=0;
 String postStr = "";
 
 Tinysine_CC3000_Client www;
@@ -62,8 +70,9 @@ void setup(void)
   Serial.println(F("Hello, CC3000!\n")); 
   Serial.print("Free RAM: ");
   Serial.println(getFreeRam(), DEC);
-  
-   
+
+  lcd.begin(16, 2); 
+  lcd.print("Temp: ");
   
  /* Initialise the module */
   connectToSite();
@@ -75,14 +84,11 @@ void setup(void)
 
 
 //--------------------------------------------------------
-void loop(void)
-{
-
- if( millis()-lastTime > checkupTime)
- {
+void loop(void) { 
+  if( millis()-lastTime > checkupTime) {
     Serial.println("Main Loop:");
     valueSet();
- }
+  }
  
 }
 //----------------------------------------------------------
@@ -147,6 +153,7 @@ void connectToSite()
 
 void valueSet()
 {
+   
   Serial.println("");
     Serial.println("New Value!");
   long t = millis();
@@ -165,7 +172,7 @@ void valueSet()
    *   We must first turn our data into a string, then turn that string into a number;
    *   If you need more characters, you can change the 20 to something else
    */
-  postData=26;
+  postData= temperature;
   postStr = String(postData);
   int numChar = 20;
   char postChar[ numChar ] ;
@@ -173,6 +180,32 @@ void valueSet()
    
     Serial.println("While Loop:");
     while(true){
+            int sensorVal = analogRead(sensorPin);
+            Serial.print("Sensor Value: ");
+            Serial.print(sensorVal);
+
+            //convert the ADC reading to voltage 
+            float voltage = (sensorVal/1024.0)*5.0;  
+            //print new value to serial monitor 
+            Serial.print(", Volts: "); 
+            Serial.print(voltage);
+            //convert the voltage to temperature in degrees
+            temperature = (voltage - .5)*100;
+            Serial.print(", degrees C; ");
+            Serial.println(temperature);
+
+            if (temperature > baselineTemp) {
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print(temperature);
+              delay(250);
+            } else {
+              lcd.clear(); 
+              lcd.setCursor(0,0);
+              lcd.print("Sensing Temperature");
+              delay(250);
+            }
+            
             if (www.connected()) {
             Serial.println("Entering Commands");
             www.fastrprint(F("POST "));
@@ -204,6 +237,9 @@ void valueSet()
            // Serial.println(F("Connection failed"));    
             return;
           }
+
+          
+          
           Serial.println(F("\n----------------------+---------------"));
           
 

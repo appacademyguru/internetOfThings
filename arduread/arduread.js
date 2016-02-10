@@ -9,8 +9,8 @@
 // This also allows us to store multiple values in a single location if we choose
 
 DataColl = new Mongo.Collection('datastore'); //Initialize the collection
-val0=54; //Initial value for data
-time0 = new Date().getTime(); // Adding a time value. Not strictly necessary, but useful.
+var val0 = 54; //Initial value for data
+var time0 = new Date().getTime(); // Adding a time value. Not strictly necessary, but useful.
 
 
 if (Meteor.isServer) {
